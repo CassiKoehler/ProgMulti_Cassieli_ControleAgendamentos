@@ -17,4 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+###Criando a Rota de Cliente
+use App\Http\Controllers\ClienteController;
+Route::resource('clientes', ClienteController::class);
+
 require __DIR__.'/auth.php';
