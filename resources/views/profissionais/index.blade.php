@@ -9,18 +9,18 @@
             <div>
                 <label for="nome" class="block text-sm font-medium">Nome:</label>
                 <input type="text" id="nome" name="nome" placeholder="Digite o nome do profissional"
-                       class="w-full p-2 rounded border text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-pink-300"
-                       style="background-color: #ec4899;" required>
+                       class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
             </div>
 
             <div>
                 <label for="especialidade" class="block text-sm font-medium">Especialidade:</label>
                 <input type="text" id="especialidade" name="especialidade" placeholder="Ex: Extensão de cílios, Designer"
-                       class="w-full p-2 rounded border text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-pink-300"
-                       style="background-color: #ec4899;" required>
+                       class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
             </div>
 
-            <button type="submit" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold">Cadastrar</button>
+            <button type="submit" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold">
+                Cadastrar
+            </button>
         </form>
 
         <!-- Mensagem de Sucesso -->

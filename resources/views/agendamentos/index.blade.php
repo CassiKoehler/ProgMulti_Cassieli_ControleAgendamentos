@@ -9,7 +9,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label for="cliente_id" class="block text-sm font-medium">Cliente:</label>
-                    <select name="cliente_id" id="cliente_id" class="w-full p-2 rounded border bg-pink-500 text-white" required>
+                    <select name="cliente_id" id="cliente_id" class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
                         <option value="">Selecione um cliente</option>
                         @foreach($clientes as $cliente)
                             <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
@@ -19,7 +19,7 @@
 
                 <div>
                     <label for="profissional_id" class="block text-sm font-medium">Profissional:</label>
-                    <select name="profissional_id" id="profissional_id" class="w-full p-2 rounded border bg-pink-500 text-white" required>
+                    <select name="profissional_id" id="profissional_id" class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
                         <option value="">Selecione um profissional</option>
                         @foreach($profissionais as $prof)
                             <option value="{{ $prof->id }}">{{ $prof->nome }}</option>
@@ -29,7 +29,7 @@
 
                 <div>
                     <label for="servico_id" class="block text-sm font-medium">Serviço:</label>
-                    <select name="servico_id" id="servico_id" class="w-full p-2 rounded border bg-pink-500 text-white" required>
+                    <select name="servico_id" id="servico_id" class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
                         <option value="">Selecione um serviço</option>
                         @foreach($servicos as $servico)
                             <option value="{{ $servico->id }}">{{ $servico->nome_servico }}</option>
@@ -40,22 +40,19 @@
                 <div>
                     <label for="data_hora" class="block text-sm font-medium">Data e Hora:</label>
                     <input type="datetime-local" name="data_hora" id="data_hora"
-                           class="w-full p-2 rounded border text-white focus:outline-none"
-                           style="background-color: #ec4899;" required>
+                           class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
                 </div>
 
                 <div>
                     <label for="status" class="block text-sm font-medium">Status:</label>
                     <input type="text" name="status" id="status" placeholder="Pendente, Confirmado..."
-                           class="w-full p-2 rounded border text-white focus:outline-none"
-                           style="background-color: #ec4899;" required>
+                           class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
                 </div>
 
                 <div class="sm:col-span-2">
                     <label for="observacao" class="block text-sm font-medium">Observação:</label>
                     <textarea name="observacao" id="observacao" rows="3"
-                              class="w-full p-2 rounded border text-white focus:outline-none"
-                              style="background-color: #ec4899;"></textarea>
+                              class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white"></textarea>
                 </div>
             </div>
 

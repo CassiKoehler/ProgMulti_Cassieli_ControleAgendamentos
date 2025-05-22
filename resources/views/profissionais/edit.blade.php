@@ -10,23 +10,18 @@
             <div>
                 <label for="nome" class="block text-sm font-medium">Nome:</label>
                 <input type="text" id="nome" name="nome" value="{{ $profissional->nome }}"
-                       class="w-full p-2 rounded border text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-pink-300"
-                       style="background-color: #ec4899;" required>
+                       class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
             </div>
 
             <div>
                 <label for="especialidade" class="block text-sm font-medium">Especialidade:</label>
                 <input type="text" id="especialidade" name="especialidade" value="{{ $profissional->especialidade }}"
-                       class="w-full p-2 rounded border text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-pink-300"
-                       style="background-color: #ec4899;" required>
+                       class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
             </div>
 
             <div class="flex justify-between">
-                <a href="{{ route('profissionais.index') }}"
-                   class="text-sm text-blue-400 hover:underline self-center">← Voltar</a>
-
-                <button type="submit"
-                        class="py-2 px-4 bg-green-600 hover:bg-green-700 text-white rounded font-semibold">
+                <a href="{{ route('profissionais.index') }}" class="text-sm text-blue-400 hover:underline self-center">← Voltar</a>
+                <button type="submit" class="py-2 px-4 bg-green-600 hover:bg-green-700 text-white rounded font-semibold">
                     Salvar Alterações
                 </button>
             </div>

@@ -9,22 +9,24 @@
             <div>
                 <label for="nome" class="block text-sm font-medium">Nome:</label>
                 <input type="text" id="nome" name="nome" placeholder="Digite o nome completo"
-                       class="w-full p-2 rounded border bg-pink-500 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-pink-300" required>
+                       class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
             </div>
 
             <div>
                 <label for="email" class="block text-sm font-medium">Email:</label>
                 <input type="email" id="email" name="email" placeholder="email@exemplo.com"
-                       class="w-full p-2 rounded border bg-pink-500 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-pink-300" required>
+                       class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
             </div>
 
             <div>
                 <label for="telefone" class="block text-sm font-medium">Telefone:</label>
                 <input type="text" id="telefone" name="telefone" placeholder="(99) 99999-9999"
-                       class="w-full p-2 rounded border bg-pink-500 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-pink-300" required>
+                       class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
             </div>
 
-            <button type="submit" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold">Cadastrar</button>
+            <button type="submit" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold">
+                Cadastrar
+            </button>
         </form>
 
         <!-- Mensagem de Sucesso -->
