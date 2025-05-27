@@ -7,6 +7,9 @@ use App\Models\Cliente;
 use App\Models\Profissional;
 use App\Models\Servico;
 use Illuminate\Http\Request;
+use App\Mail\AgendamentoCriadoMail;
+use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class AgendamentoController extends Controller
 {
@@ -31,7 +34,12 @@ class AgendamentoController extends Controller
             'observacao' => 'nullable|string',
         ]);
 
-        Agendamento::create($request->all());
+        $agendamento = Agendamento::create($request->all());
+
+        // Enviar e-mail para o cliente
+        if ($agendamento->cliente && $agendamento->cliente->email) {
+            Mail::to($agendamento->cliente->email)->send(new AgendamentoCriadoMail($agendamento));
+        }
 
         return redirect()->back()->with('success', 'Agendamento cadastrado com sucesso!');
     }
@@ -69,5 +77,41 @@ class AgendamentoController extends Controller
         $agendamento->delete();
 
         return redirect()->back()->with('success', 'Agendamento excluído com sucesso!');
+    }
+
+    // Tela do calendário
+    public function painel()
+    {
+        return view('agendamentos.painel');
+    }
+
+    // Retorna os eventos em JSON para o FullCalendar
+    public function eventos()
+    {
+        $agendamentos = Agendamento::with(['cliente', 'servico'])->get();
+
+        $eventos = $agendamentos->map(function ($agendamento) {
+            return [
+                'id' => $agendamento->id,
+                'title' => $agendamento->cliente->nome . ' - ' . $agendamento->servico->nome_servico,
+                'start' => Carbon::parse($agendamento->data_hora)->format('Y-m-d\TH:i:s'),
+                'end' => Carbon::parse($agendamento->data_hora)->addHour()->format('Y-m-d\TH:i:s'),
+                'color' => $this->corPorStatus($agendamento->status),
+            ];
+        });
+
+        return response()->json($eventos);
+    }
+
+
+    // Define cor do evento conforme o status
+    private function corPorStatus($status)
+    {
+        return match ($status) {
+            'confirmado' => '#28a745',   // verde
+            'pendente' => '#ffc107',     // amarelo
+            'cancelado' => '#dc3545',    // vermelho
+            default => '#007bff',        // azul padrão
+        };
     }
 }

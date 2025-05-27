@@ -25,6 +25,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('profissionais', ProfissionalController::class);
     Route::resource('servicos', ServicoController::class);
     Route::resource('agendamentos', AgendamentoController::class);
+
+    #######
+
+    Route::get('/painel-agendamentos', [AgendamentoController::class, 'painel'])->name('agendamentos.painel');
+    Route::get('/agendamentos/eventos', [AgendamentoController::class, 'eventos']);
+
+
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

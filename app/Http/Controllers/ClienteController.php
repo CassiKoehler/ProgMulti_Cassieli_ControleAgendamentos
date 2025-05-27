@@ -4,21 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use Carbon\Carbon;
 
 class ClienteController extends Controller
 {
-    /**
-     * Exibe a lista de clientes.
-     */
     public function index()
     {
         $clientes = Cliente::all();
         return view('clientes.index', compact('clientes'));
     }
 
-    /**
-     * Armazena um novo cliente.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -27,23 +22,21 @@ class ClienteController extends Controller
             'telefone' => 'required|string|max:20',
         ]);
 
-        Cliente::create($request->all());
+        // Adiciona data_cadastro com a data/hora atual só na criação
+        Cliente::create(array_merge(
+            $request->all(),
+            ['data_cadastro' => Carbon::now('America/Sao_Paulo')]  // Define o timezone de Brasília
+        ));
 
         return redirect()->back()->with('success', 'Cliente cadastrado com sucesso!');
     }
 
-    /**
-     * Exibe o formulário para editar um cliente.
-     */
     public function edit(string $id)
     {
         $cliente = Cliente::findOrFail($id);
         return view('clientes.edit', compact('cliente'));
     }
 
-    /**
-     * Atualiza os dados de um cliente.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -58,9 +51,6 @@ class ClienteController extends Controller
         return redirect()->route('clientes.index')->with('success', 'Cliente atualizado com sucesso!');
     }
 
-    /**
-     * Remove um cliente do sistema.
-     */
     public function destroy(string $id)
     {
         $cliente = Cliente::findOrFail($id);

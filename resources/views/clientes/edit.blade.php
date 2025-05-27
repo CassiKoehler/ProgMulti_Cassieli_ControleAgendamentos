@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <div class="p-6 text-gray-900 dark:text-gray-100">
         <h1 class="text-2xl font-bold mb-4">Editar Cliente</h1>
 
@@ -27,4 +29,4 @@
             <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded">Salvar Alterações</button>
         </form>
     </div>
-</x-app-layout>
+@endsection

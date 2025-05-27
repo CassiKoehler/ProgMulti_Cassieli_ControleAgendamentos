@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <div class="p-6 text-gray-900 dark:text-gray-100 flex flex-col items-center justify-center">
         <h1 class="text-2xl font-bold mb-6">Cadastro de Profissionais</h1>
 
@@ -66,4 +68,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection
