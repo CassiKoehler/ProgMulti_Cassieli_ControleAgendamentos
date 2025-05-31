@@ -14,18 +14,20 @@ class Cliente extends Model
 
     public $timestamps = false;
 
-    // Diga pro Laravel que esse campo é datetime:
     protected $casts = [
         'data_cadastro' => 'datetime',
     ];
 
-    // Accessor para data_cadastro formatada
     public function getDataCadastroFormatadaAttribute()
     {
-        if ($this->data_cadastro) {
-            // Como agora é Carbon, não precisa do parse
-            return $this->data_cadastro->format('d/m/Y H:i');
-        }
-        return '-';
+        return $this->data_cadastro 
+            ? $this->data_cadastro->format('d/m/Y H:i') 
+            : '-';
+    }
+
+    // Relacionamento com agendamentos (para regra de negócio da exclusão)
+    public function agendamentos()
+    {
+        return $this->hasMany(Agendamento::class, 'cliente_id');
     }
 }

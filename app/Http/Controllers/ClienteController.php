@@ -8,24 +8,33 @@ use Carbon\Carbon;
 
 class ClienteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $clientes = Cliente::all();
+        $busca = $request->input('busca');
+
+        $clientes = Cliente::when($busca, function ($query, $busca) {
+            $query->where('nome', 'like', "%{$busca}%")
+                ->orWhere('email', 'like', "%{$busca}%")
+                ->orWhere('telefone', 'like', "%{$busca}%");
+        })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('clientes.index', compact('clientes'));
     }
+
 
     public function store(Request $request)
     {
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:clientes,email',
-            'telefone' => 'required|string|max:20',
+            'telefone' => 'required|string|max:20|unique:clientes,telefone',
         ]);
 
-        // Adiciona data_cadastro com a data/hora atual só na criação
         Cliente::create(array_merge(
             $request->all(),
-            ['data_cadastro' => Carbon::now('America/Sao_Paulo')]  // Define o timezone de Brasília
+            ['data_cadastro' => Carbon::now('America/Sao_Paulo')]
         ));
 
         return redirect()->back()->with('success', 'Cliente cadastrado com sucesso!');
@@ -39,13 +48,14 @@ class ClienteController extends Controller
 
     public function update(Request $request, string $id)
     {
+        $cliente = Cliente::findOrFail($id);
+
         $request->validate([
             'nome' => 'required|string|max:255',
-            'email' => 'required|email|unique:clientes,email,' . $id,
-            'telefone' => 'required|string|max:20',
+            'email' => 'required|email|unique:clientes,email,' . $cliente->id,
+            'telefone' => 'required|string|max:20|unique:clientes,telefone,' . $cliente->id,
         ]);
 
-        $cliente = Cliente::findOrFail($id);
         $cliente->update($request->all());
 
         return redirect()->route('clientes.index')->with('success', 'Cliente atualizado com sucesso!');
@@ -54,6 +64,11 @@ class ClienteController extends Controller
     public function destroy(string $id)
     {
         $cliente = Cliente::findOrFail($id);
+
+        if ($cliente->agendamentos()->exists()) {
+            return redirect()->back()->with('error', 'Não é possível excluir cliente com agendamentos vinculados.');
+        }
+
         $cliente->delete();
 
         return redirect()->route('clientes.index')->with('success', 'Cliente excluído com sucesso!');

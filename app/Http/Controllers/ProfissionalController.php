@@ -8,16 +8,24 @@ use Illuminate\Http\Request;
 class ProfissionalController extends Controller
 {
     /**
-     * Exibe a lista de profissionais.
+     * Exibe a lista de profissionais, com busca por nome.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $profissionais = Profissional::all();
+        $query = Profissional::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('nome', 'like', "%{$search}%");
+        }
+
+        $profissionais = $query->get();
+
         return view('profissionais.index', compact('profissionais'));
     }
 
     /**
-     * Armazena um novo profissional.
+     * Armazena um novo profissional, validando campos e duplicidade.
      */
     public function store(Request $request)
     {
@@ -25,6 +33,17 @@ class ProfissionalController extends Controller
             'nome' => 'required|string|max:255',
             'especialidade' => 'required|string|max:255',
         ]);
+
+        // Verificar duplicidade nome + especialidade
+        $existe = Profissional::where('nome', $request->nome)
+            ->where('especialidade', $request->especialidade)
+            ->exists();
+
+        if ($existe) {
+            return redirect()->back()
+                ->withErrors(['nome' => 'Já existe um profissional com este nome e especialidade.'])
+                ->withInput();
+        }
 
         Profissional::create($request->all());
 
@@ -41,27 +60,39 @@ class ProfissionalController extends Controller
     }
 
     /**
-     * Atualiza os dados de um profissional.
+     * Atualiza os dados de um profissional, validando campos e duplicidade.
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nome' => 'required|string|max:255',
             'especialidade' => 'required|string|max:255',
         ]);
 
         $profissional = Profissional::findOrFail($id);
-        $profissional->update($request->all());
+
+        // Atualiza só a especialidade, ignorando o nome para garantir a regra
+        $profissional->especialidade = $request->especialidade;
+        $profissional->save();
 
         return redirect()->route('profissionais.index')->with('success', 'Profissional atualizado com sucesso!');
     }
 
+
     /**
-     * Remove um profissional do sistema.
+     * Remove um profissional do sistema, apenas se não estiver vinculado a agendamentos.
      */
     public function destroy($id)
     {
         $profissional = Profissional::findOrFail($id);
+
+        // Verificar se profissional está vinculado a agendamentos
+        $temAgendamento = $profissional->agendamentos()->exists();
+
+        if ($temAgendamento) {
+            return redirect()->back()
+                ->withErrors(['error' => 'Este profissional está vinculado a agendamentos e não pode ser excluído.']);
+        }
+
         $profissional->delete();
 
         return redirect()->back()->with('success', 'Profissional excluído com sucesso!');
