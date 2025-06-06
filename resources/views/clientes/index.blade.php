@@ -1,105 +1,103 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-6 text-gray-900 dark:text-gray-100 flex flex-col items-center justify-center">
-    <h1 class="text-2xl font-bold mb-6">Cadastro de Clientes</h1>
+    <div class="max-w-6xl mx-auto bg-card text-textPrimary rounded shadow p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-4">Cadastro de Clientes</h2>
 
-    <!-- Formulário de Cadastro -->
-    <form action="{{ route('clientes.store') }}" method="POST"
-        class="w-full max-w-md bg-gray-800 p-6 rounded shadow space-y-4">
-        @csrf
+        @if (session('success'))
+            <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
 
-        <div>
-            <label for="nome" class="block text-sm font-medium">Nome:</label>
-            <input type="text" id="nome" name="nome" placeholder="Digite o nome completo"
-                class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
-        </div>
+        <form action="{{ route('clientes.store') }}" method="POST" class="space-y-4">
+            @csrf
 
-        <div>
-            <label for="email" class="block text-sm font-medium">Email:</label>
-            <input type="email" id="email" name="email" placeholder="email@exemplo.com"
-                class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
-        </div>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div>
+                    <label for="nome" class="block mb-1">Nome:</label>
+                    <input type="text" name="nome" id="nome" value="{{ old('nome') }}"
+                        class="w-full px-3 py-2 border rounded bg-white text-black" required placeholder="Informe o nome">
+                    @error('nome')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
 
-        <div>
-            <label for="telefone" class="block text-sm font-medium">Telefone:</label>
-            <input type="text" id="telefone" name="telefone" placeholder="(99) 99999-9999"
-                class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white" required>
-        </div>
+                <div>
+                    <label for="email" class="block mb-1">E-mail:</label>
+                    <input type="email" name="email" id="email" value="{{ old('email') }}"
+                        class="w-full px-3 py-2 border rounded bg-white text-black" required placeholder="Informe o e-mail">
+                    @error('email')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
 
-        <button type="submit" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold">
-            Cadastrar
-        </button>
-    </form>
+                <div>
+                    <label for="telefone" class="block mb-1">Telefone:</label>
+                    <input type="text" name="telefone" id="telefone" value="{{ old('telefone') }}"
+                        class="w-full px-3 py-2 border rounded bg-white text-black" required
+                        placeholder="Informe o telefone">
+                    @error('telefone')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
 
-    <!-- Mensagens -->
-    @if(session('success'))
-        <div class="mt-4 w-full max-w-md bg-green-500 text-white p-3 rounded">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="mt-4 w-full max-w-md bg-red-500 text-white p-3 rounded">
-            {{ session('error') }}
-        </div>
-    @endif
-
-    <!-- Formulário de Busca -->
-    <div class="w-full max-w-md mt-6">
-        <form method="GET" class="space-y-2">
-            <input type="text" name="busca" placeholder="Pesquisar por nome, email ou telefone"
-                value="{{ request('busca') }}"
-                class="w-full p-2 rounded border dark:bg-gray-800 dark:text-white">
-            <button type="submit"
-                class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold">
-                Pesquisar
-            </button>
+            <div class="pt-4">
+                <button type="submit" class="bg-accent hover:bg-accentHover text-white px-6 py-2 rounded">
+                    Cadastrar
+                </button>
+            </div>
         </form>
     </div>
 
-    <!-- Título da Listagem -->
-    <div class="w-full max-w-4xl mt-10">
+    <div class="max-w-6xl mx-auto bg-card text-textPrimary rounded shadow p-6">
+        <form method="GET" action="{{ route('clientes.index') }}" class="mb-4 flex flex-col sm:flex-row gap-4">
+            <input type="text" name="busca" placeholder="Pesquisar por nome, email ou telefone"
+                value="{{ request('busca') }}" class="w-full px-3 py-2 border rounded bg-white text-black">
+            <div class="pt-4">
+                <button type="submit" class="bg-accent hover:bg-accentHover text-white px-6 py-2 rounded font-semibold">
+                    Pesquisar
+                </button>
+            </div>
+        </form>
+
         <h2 class="text-xl font-semibold mb-4">Listagem de Clientes Cadastrados</h2>
 
-        <!-- Tabela de Clientes -->
         <div class="overflow-x-auto">
-            <table class="min-w-full bg-gray-800 rounded">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-2 px-4 text-left">Nome</th>
-                        <th class="py-2 px-4 text-left">Email</th>
-                        <th class="py-2 px-4 text-left">Telefone</th>
-                        <th class="py-2 px-4 text-left">Data de Cadastro</th>
-                        <th class="py-2 px-4 text-left">Ações</th>
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-primary">
+                        <th class="px-4 py-2 border-b">Nome</th>
+                        <th class="px-4 py-2 border-b">E-mail</th>
+                        <th class="px-4 py-2 border-b">Telefone</th>
+                        <th class="px-4 py-2 border-b">Ações</th>
                     </tr>
                 </thead>
-                <tbody class="text-white">
-                    @forelse($clientes as $cliente)
-                        <tr class="border-t border-gray-700">
-                            <td class="py-2 px-4">{{ $cliente->nome }}</td>
-                            <td class="py-2 px-4">{{ $cliente->email }}</td>
-                            <td class="py-2 px-4">{{ $cliente->telefone }}</td>
-                            <td class="py-2 px-4">{{ $cliente->data_cadastro_formatada }}</td>
-                            <td class="py-2 px-4 space-x-2">
+                <tbody>
+                    @forelse ($clientes as $cliente)
+                        <tr>
+                            <td class="px-4 py-2 border-b">{{ $cliente->nome }}</td>
+                            <td class="px-4 py-2 border-b">{{ $cliente->email }}</td>
+                            <td class="px-4 py-2 border-b">{{ $cliente->telefone }}</td>
+                            <td class="px-4 py-2 border-b space-x-2">
                                 <a href="{{ route('clientes.edit', $cliente->id) }}"
-                                   class="text-blue-400 hover:underline">Editar</a>
-                                <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" class="inline">
+                                    class="text-blue-500 hover:underline">Editar</a>
+                                <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" class="inline"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este cliente?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')"
-                                            class="text-red-400 hover:underline">Excluir</button>
+                                    <button type="submit" class="text-red-500 hover:underline">Excluir</button>
                                 </form>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="py-4 text-center">Nenhum cliente cadastrado.</td>
+                            <td colspan="4" class="px-4 py-2 text-center">Nenhum cliente encontrado.</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-</div>
 @endsection
