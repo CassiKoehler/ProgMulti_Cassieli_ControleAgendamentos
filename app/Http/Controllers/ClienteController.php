@@ -61,16 +61,20 @@ class ClienteController extends Controller
         return redirect()->route('clientes.index')->with('success', 'Cliente atualizado com sucesso!');
     }
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $cliente = Cliente::findOrFail($id);
 
-        if ($cliente->agendamentos()->exists()) {
-            return redirect()->back()->with('error', 'Não é possível excluir cliente com agendamentos vinculados.');
+        // Verifica se há agendamentos
+        if ($cliente->agendamentos()->count() > 0) {
+            return redirect()->route('clientes.index')
+                ->with('error', 'Este cliente possui agendamentos vinculados e não pode ser excluído.');
         }
 
         $cliente->delete();
 
-        return redirect()->route('clientes.index')->with('success', 'Cliente excluído com sucesso!');
+        return redirect()->route('clientes.index')
+            ->with('success', 'Cliente excluído com sucesso.');
     }
+
 }

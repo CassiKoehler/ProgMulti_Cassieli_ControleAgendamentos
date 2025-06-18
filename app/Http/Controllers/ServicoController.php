@@ -58,8 +58,18 @@ class ServicoController extends Controller
     public function destroy($id)
     {
         $servico = Servico::findOrFail($id);
+
+        // Verificar se o serviço está vinculado a agendamentos
+        $temAgendamento = $servico->agendamentos()->exists();
+
+        if ($temAgendamento) {
+            return redirect()->back()
+                ->withErrors(['error' => 'Este serviço está vinculado a agendamentos e não pode ser excluído.']);
+        }
+
         $servico->delete();
 
         return redirect()->back()->with('success', 'Serviço excluído com sucesso!');
     }
+
 }

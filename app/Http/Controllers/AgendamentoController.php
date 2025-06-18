@@ -34,9 +34,18 @@ class AgendamentoController extends Controller
             'observacao' => 'nullable|string',
         ]);
 
+        // Validação de conflito de horário no cadastro
+        $existeAgendamento = Agendamento::where('profissional_id', $request->profissional_id)
+            ->where('data_hora', $request->data_hora)
+            ->exists();
+
+        if ($existeAgendamento) {
+            return redirect()->back()->withErrors(['data_hora' => 'Já existe um agendamento para este profissional neste horário.'])->withInput();
+        }
+
         $agendamento = Agendamento::create($request->all());
 
-        // Enviar e-mail para o cliente
+        // Enviar e-mail
         if ($agendamento->cliente && $agendamento->cliente->email) {
             Mail::to($agendamento->cliente->email)->send(new AgendamentoCriadoMail($agendamento));
         }
@@ -64,6 +73,16 @@ class AgendamentoController extends Controller
             'status' => 'required|string|max:100',
             'observacao' => 'nullable|string',
         ]);
+
+        // Validação de conflito de horário na edição
+        $existeAgendamento = Agendamento::where('profissional_id', $request->profissional_id)
+            ->where('data_hora', $request->data_hora)
+            ->where('id', '!=', $id) // Ignora o próprio agendamento
+            ->exists();
+
+        if ($existeAgendamento) {
+            return redirect()->back()->withErrors(['data_hora' => 'Já existe outro agendamento para este profissional neste horário.'])->withInput();
+        }
 
         $agendamento = Agendamento::findOrFail($id);
         $agendamento->update($request->all());
@@ -102,7 +121,6 @@ class AgendamentoController extends Controller
 
         return response()->json($eventos);
     }
-
 
     // Define cor do evento conforme o status
     private function corPorStatus($status)

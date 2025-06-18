@@ -3,7 +3,7 @@
 @section('content')
     <div class="max-w-7xl mx-auto space-y-6">
         <!-- Header com título e controles -->
-        <div class="bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg shadow-lg p-6 text-white">
+        <div class="bg-gradient-to-r from-purple-600 to-purple-600 rounded-lg shadow-lg p-6 text-white">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
                     <h1 class="text-3xl font-bold mb-2">Painel de Agendamentos</h1>

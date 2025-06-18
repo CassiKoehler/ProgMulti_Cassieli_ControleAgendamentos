@@ -212,7 +212,7 @@
             <div class="p-6 border-t border-slate-700/50">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center space-x-3">
-                        <div class="w-8 h-8 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-r from-purple-500 to-purple-500 flex items-center justify-center">
                             <i data-lucide="user" class="w-4 h-4 text-white"></i>
                         </div>
                         <div>
@@ -242,7 +242,7 @@
                             <i data-lucide="menu" class="w-6 h-6"></i>
                         </button>
                         <div>
-                            <h1 class="text-2xl font-bold text-white">@yield('page-title', 'Dashboard')</h1>
+                            <h1 class="text-2xl font-bold text-purple-400">@yield('page-title', 'AgendaPro')</h1>
                             <p class="text-sm text-slate-400">@yield('page-description', 'Bem-vindo ao sistema de agendamentos')</p>
                         </div>
                     </div>

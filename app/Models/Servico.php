@@ -14,4 +14,10 @@ class Servico extends Model
         'descricao',
         'preco',
     ];
+
+    public function agendamentos()
+    {
+        return $this->hasMany(Agendamento::class, 'servico_id');
+    }
+
 }

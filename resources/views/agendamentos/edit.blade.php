@@ -42,7 +42,7 @@
         <!-- Card de Edição -->
         <div class="max-w-7xl mx-auto">
             <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-                <div class="bg-gradient-to-r from-orange-600 to-red-600 px-8 py-6">
+                <div class="bg-gradient-to-r from-purple-600 to-purple-600 px-8 py-6">
                     <div class="flex items-center">
                         <div class="bg-white/20 p-3 rounded-xl mr-4">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -65,7 +65,7 @@
                             <div class="space-y-2">
                                 <label for="cliente_id" class="block text-sm font-semibold text-slate-700">Cliente *</label>
                                 <select name="cliente_id" id="cliente_id" required
-                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200">
+                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200">
                                     <option value="">Selecione um cliente</option>
                                     @foreach($clientes as $cliente)
                                         <option value="{{ $cliente->id }}" {{ $agendamento->cliente_id == $cliente->id ? 'selected' : '' }}>
@@ -78,7 +78,7 @@
                             <div class="space-y-2">
                                 <label for="profissional_id" class="block text-sm font-semibold text-slate-700">Profissional *</label>
                                 <select name="profissional_id" id="profissional_id" required
-                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200">
+                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200">
                                     <option value="">Selecione um profissional</option>
                                     @foreach($profissionais as $prof)
                                         <option value="{{ $prof->id }}" {{ $agendamento->profissional_id == $prof->id ? 'selected' : '' }}>
@@ -91,7 +91,7 @@
                             <div class="space-y-2">
                                 <label for="servico_id" class="block text-sm font-semibold text-slate-700">Serviço *</label>
                                 <select name="servico_id" id="servico_id" required
-                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200">
+                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200">
                                     <option value="">Selecione um serviço</option>
                                     @foreach($servicos as $servico)
                                         <option value="{{ $servico->id }}" {{ $agendamento->servico_id == $servico->id ? 'selected' : '' }}>
@@ -105,13 +105,13 @@
                                 <label for="data_hora" class="block text-sm font-semibold text-slate-700">Data e Hora *</label>
                                 <input type="datetime-local" name="data_hora" id="data_hora" required
                                     value="{{ \Carbon\Carbon::parse($agendamento->data_hora)->format('Y-m-d\TH:i') }}"
-                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200" />
+                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200" />
                             </div>
 
                             <div class="space-y-2">
                                 <label for="status" class="block text-sm font-semibold text-slate-700">Status *</label>
                                 <select name="status" id="status" required
-                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200">
+                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200">
                                     <option value="">Selecione o status</option>
                                     <option value="Pendente" {{ $agendamento->status == 'Pendente' ? 'selected' : '' }}>Pendente</option>
                                     <option value="Confirmado" {{ $agendamento->status == 'Confirmado' ? 'selected' : '' }}>Confirmado</option>
@@ -124,7 +124,7 @@
                             <div class="space-y-2 md:col-span-2 lg:col-span-1">
                                 <label for="observacao" class="block text-sm font-semibold text-slate-700">Observação</label>
                                 <textarea name="observacao" id="observacao" rows="3" placeholder="Observações adicionais..."
-                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 resize-none">{{ $agendamento->observacao }}</textarea>
+                                    class="w-full px-4 py-3 border border-slate-300 rounded-xl bg-white text-slate-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 resize-none">{{ $agendamento->observacao }}</textarea>
                             </div>
                         </div>
 
@@ -138,7 +138,7 @@
                             </a>
                             
                             <button type="submit" 
-                                class="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center">
+                                class="bg-gradient-to-r from-purple-600 to-purple-600 hover:from-purple-700 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
